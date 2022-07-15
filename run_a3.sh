@@ -1,13 +1,13 @@
 #! /bin/bash
-SAVE=adabelief
+SAVE=a3
 AVERAGE=5
 mkdir -p $SAVE
 
 CUDA_VISIBLE_DEVICES=0 fairseq-train  \
           data-bin/iwslt14.tokenized.de-en   \
           --arch transformer_iwslt_de_en --share-decoder-input-output-embed  \
-          --optimizer adabelief --adam-betas '(0.9, 0.999)' --adam-eps 1e-16 \
-          --weight-decouple True --rectify True  --clip-norm 0.0   \
+          --optimizer a3 --a3-betas '(0.9, 0.999, 0.999)' --a3-eps 1e-16 --a3-rho 0.16 \
+          --weight-decouple True --rectify False  --clip-norm 0.0   \
           --lr 5e-4 --lr-scheduler inverse_sqrt --warmup-updates 4000   \
           --dropout 0.3 --weight-decay 0.0001  --criterion label_smoothed_cross_entropy \
           --label-smoothing 0.1  --max-tokens 4096     --eval-bleu  \

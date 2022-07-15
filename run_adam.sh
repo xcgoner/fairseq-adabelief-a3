@@ -15,12 +15,11 @@ CUDA_VISIBLE_DEVICES=0 fairseq-train \
     --eval-bleu-args '{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
     --eval-bleu-remove-bpe \
-    --eval-bleu-print-samples \
     --best-checkpoint-metric bleu --maximize-best-checkpoint-metric \
     --save-dir $SAVE --max-epoch 50 \
     | tee -a $SAVE/log.txt
 
-python scripts/average_checkpoints.py --inputs $SAVE --num-epoch-checkpoints $AVERAGE --output $SAVE/average_model.pt
+python3 scripts/average_checkpoints.py --inputs $SAVE --num-epoch-checkpoints $AVERAGE --output $SAVE/average_model.pt
 
 
 CUDA_VISIBLE_DEVICES=0 fairseq-generate data-bin/iwslt14.tokenized.de-en \
